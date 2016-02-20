@@ -1,0 +1,3 @@
+#!/bin/sh
+merge=$(git-last-merge)
+echo "${merge:?can\'t find last merge}^2..HEAD"

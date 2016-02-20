@@ -1,0 +1,1 @@
+git rev-list --merges -n 1 HEAD
