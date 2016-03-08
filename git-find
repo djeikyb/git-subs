@@ -1,0 +1,4 @@
+#!/bin/sh
+
+file=$1
+git show $(git rev-list --all -- "$file" | paste -s -d\ ) -- $file
