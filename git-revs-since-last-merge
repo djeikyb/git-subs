@@ -1,3 +1,22 @@
 #!/bin/sh
-merge=$(git-last-merge)
-echo "${merge:?can\'t find last merge}^2..HEAD"
+
+### this script returns a gitrevisions(7) expression that
+### shows history since the last merge.
+
+max=10
+if [ $(git rev-list --count --max-count $max HEAD) -lt $max ]; then
+  # if the repo has less than ten commits, return nothing
+  # which means show everything
+  exit 0
+fi
+
+anchor=$(git-last-merge)
+if [ -n "$anchor" ]; then
+  # include a little context around the merge commit
+  anchor="$anchor"'^^'
+else
+  # if no merges, just show the last n commits
+  anchor='HEAD~'"$max"
+fi
+
+echo "$anchor..HEAD"
